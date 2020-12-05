@@ -1,7 +1,7 @@
-NAME = iter
+NAME = Array
 
 SRCS_DIR = ./
-SRCS = iter.cpp
+SRCS = main.cpp
 
 FLAGS = -Wall -Wextra -Werror
 
