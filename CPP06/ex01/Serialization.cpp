@@ -1,12 +1,5 @@
 # include "Serialization.hpp"
 
-//reinterpret_cast Permite que el puntero se trate como un tipo entero. El resultado se cambia a bits 
-//y se compara mediante XOR consigo mismo para producir un índice único (con un alto grado de probabilidad).
-// El índice se trunca mediante una conversión de estilo de C al tipo de valor devuelto de la función.
-
-//Este tipo de conversión admite, por ejemplo, conversiones entre punteros no compatibles entre sí. Entiéndase 
-//que este tipo de conversión hay que utilizarla con muchísimo cuidado ya que puede tener efectos devastadores 
-//sobre nuestro código.
 void *serialize(void)
 {
     char *raw = new char[20];

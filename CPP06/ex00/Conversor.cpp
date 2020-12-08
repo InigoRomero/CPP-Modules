@@ -14,23 +14,32 @@ Conversor::Conversor(char *src)
 	_int(0),
     _float(0),
     _char(0),
-    _src(src)
+    _double(0)
 {
     std::string nan = "nan";
-    if (isdigit(src[0]))
+    if (!strcmp(src, "nanf"))
+    {
+        src = new char[nan.length() + 1];
+        strcpy(src, "nan");
+    }
+    if (isdigit(src[0]) || !strcmp(src, "nan") || !strcmp(src, "NaN") || src[0] == '-' || src[0] == '+' || !strcmp(src, "inf") || !strcmp(src, "inff"))
     {
         try
         {
-            this->_double = atof(new char[nan.length() + 1]);
+             this->_double = atof(src);
         }
         catch (std::invalid_argument) {
             this->_double = atof("nan");
             this->_src = new char[nan.length() + 1];
+            strcpy(this->_src, "nan");
         }
         toAll();
     }
     else
         this->_char = src[0];
+    for (int i=0; i<(int)strlen(src); i++)
+        src[i] = tolower(src[i]);
+    this->_src = src;
 }
 
 Conversor::Conversor(Conversor const &copy)
@@ -56,26 +65,42 @@ Conversor &Conversor::operator=(Conversor const &op)
 
 std::ostream    &operator<<(std::ostream & out, const Conversor & Conversor)
 {
-    //char
-    if (!strcmp(Conversor.getSrc(), "nan"))
+    char *src = Conversor.getSrc();
+    if (!strcmp(src, "inff") ||!strcmp(src, "-inff") || !strcmp(src, "+inff") || !strcmp(src, "inf") ||!strcmp(src, "-inf") || !strcmp(src, "+inf"))
+    {
+        src = new char[4];
+        strcpy(src, "nan");
+    }
+    if (Conversor.getInt() ==  -2147483648 &&  strcmp(src, "-2147483648") && strcmp(src, "nan"))
+    {
+        src = new char[11];
+        strcpy(src, "impossible");
+    }
+    if (!strcmp(src, "nan") || !strcmp(src, "impossible") || Conversor.getInt() > 127 || Conversor.getInt() < 0)
         out << "[+]char: impossible";
     else if(Conversor.getChar() <= 32)
         out << "[+]char: Non displayable";
     else
         out << "[+]char: '" << Conversor.getChar() << "'";
     //int
-    if (!strcmp(Conversor.getSrc(), "nan"))
+    if (!strcmp(src, "nan"))
+        out << "\n[+]int: impossible";
+    else if (!strcmp(src, "impossible"))
         out << "\n[+]int: impossible";
     else
         out << "\n[+]int: " << Conversor.getInt();
     //float
     if (Conversor.getFloat() == Conversor.getInt())
         out << "\n[+]Float: " << Conversor.getFloat() << ".0f";
+    else if (!strcmp(src, "impossible"))
+        out << "\n[+]float: impossible";
     else
         out << "\n[+]float: " << Conversor.getFloat()  << "f";
     //double
     if (Conversor.getDouble() == Conversor.getInt())
         out << "\n[+]Double: " << Conversor.getDouble() << ".0";
+    else if (!strcmp(src, "impossible"))
+        out << "\n[+]Double: impossible";
     else
         out << "\n[+]Double: " << Conversor.getDouble();
     return (out);

@@ -1,7 +1,7 @@
-NAME = identify
+NAME = serialization
 
 SRCS_DIR = ./
-SRCS = main.cpp Identifier.cpp
+SRCS = main.cpp Serialization.cpp
 
 FLAGS = -Wall -Wextra -Werror
 
