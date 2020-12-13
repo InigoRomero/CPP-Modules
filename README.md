@@ -8,4 +8,5 @@ Some academic Projects and Exercises learning c++
 - in [04](/CPP04) I have learned: Subtype polymorphism, abstract classes, interfaces.
 - in [05](/CPP05) I have learned: Repetition and Exceptions.
 - in [06](/CPP06) I have learned: C++ Casts.
-- in [07](/CPP07) I have learned: c++ Templates
+- in [07](/CPP07) I have learned: c++ Templates.
+- in [08](/CPP08) I have learned: Templated containers, iterators and algorithms.
