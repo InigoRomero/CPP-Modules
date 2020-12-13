@@ -1,28 +1,28 @@
 # include <iostream>
 # include <random>
+using namespace std;
 
-template <typename tipo> 
-void iter(tipo *address, size_t length, void (*function)(tipo const &elt)){
+template <typename tipo, typename func> 
+void iter(tipo *address, size_t length, func function){
     for (size_t i = 0; i < length; i++)
-        (*function)(address[i]);
+        function(address[i]);
 }
 
-template<typename T>
-void sum(T const &i)
+void sum(int i)
 {
-     std::cout << " + " << i << " + ";
+     cout << " + " << i << " + ";
 }
 
 int main()
 {
     int foo [5] = { 16, 2, 77, 40, 12071 };
-    float floatR[5] = { 0.0f, 1.1f, 2.2f, 3.3f, 4.4f };
-	double doubleR[5] = { 0.00, 1.11, 2.22, 3.33, 4.44 };
-    
+
+    for (size_t i = 0; i < 5; i++)
+        cout << " - " << foo[i] << " - ";
+    cout << endl;
     size_t i = 5;
-    iter(foo, i, &sum);  std::cout << std::endl;
-    iter(floatR, 5, &sum);  std::cout << std::endl;
-    iter(doubleR, 5, &sum);  
+    iter(foo, i, &sum);
+    cout << endl;
 
     return (0);
 }
